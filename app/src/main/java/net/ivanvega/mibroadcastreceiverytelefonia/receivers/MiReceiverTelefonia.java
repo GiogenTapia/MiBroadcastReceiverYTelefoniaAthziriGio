@@ -21,6 +21,24 @@ public class MiReceiverTelefonia extends BroadcastReceiver {
 
         if(intent.getAction().equals(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)){
             Toast.makeText(context, "Me llego un mensaje", Toast.LENGTH_LONG).show();
+            
+            //RECUPERAR EL MENSAJE RECIBIDO
+            Bundle bundle = intent.getExtras();
+            SmsMessage[] smss;
+            String str;
+
+            if(bundle != null){
+                Object[] opdus = (Object[])bundle.get("pdus");
+                smss = new SmsMessage[opdus.length];
+                for (int i = 0; i < smss.length; i++) {
+                    smss [i] = SmsMessage.createFromPdu((byte[])opdus[i]);
+                    str = "Mensaje de: " + smss [i].getOriginatingAddress() +
+                            "\n" +
+                            smss [i].getMessageBody().toString();
+                    Toast.makeText(context, str, Toast.LENGTH_LONG).show();
+                }
+            }
+            
         }
 
     }
