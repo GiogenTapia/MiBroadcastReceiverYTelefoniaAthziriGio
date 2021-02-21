@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.Telephony;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,12 +22,13 @@ import net.ivanvega.mibroadcastreceiverytelefonia.receivers.MyBroadcastReceiver;
 public class MainActivity extends AppCompatActivity {
     MyBroadcastReceiver myBroadcastReceiver=
             new MyBroadcastReceiver();
-
+    private static final String TAG = "Llamar";
     MiReceiverTelefonia miReceiverTelefonia = new MiReceiverTelefonia();
 
-    Button btnS;
+    Button btnS, btnConf;
     TextView lbl;
     EditText txtTel, txtMessage;
+    static String tel = "", msm = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         lbl = findViewById(R.id.lbl);
         txtTel = findViewById(R.id.txtPhone);
         txtMessage = findViewById(R.id.txtTexto);
+        btnConf = findViewById(R.id.btnConfi);
 
         btnS.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +51,12 @@ public class MainActivity extends AppCompatActivity {
                 broadcast.putExtra("key1", "parametro de la difusion");
                 sendBroadcast(broadcast);
             }
+        });
+
+        btnConf.setOnClickListener(l -> {
+            Toast.makeText(getApplicationContext(), "Se configuró correctamente", Toast.LENGTH_LONG).show();
+            tel = txtTel.getText().toString();
+            msm = txtMessage.getText().toString();
         });
 
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -74,18 +83,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void enviarSMS(String tel, String msj) {
-         SmsManager smsManager =  SmsManager.getDefault();
 
+         SmsManager smsManager =  SmsManager.getDefault();
          smsManager.sendTextMessage(tel,null, msj,
          null, null);
 
 
-
+         /*
         Toast.makeText(
                 this, "Mensaje enviado",
                 Toast.LENGTH_LONG
-        ).show();
+        ).show(); */
     }
+
 
 
     @Override
@@ -97,5 +107,15 @@ public class MainActivity extends AppCompatActivity {
     public void btnSMS_onclick(View v){
         enviarSMS(txtTel.getText().toString(), txtMessage.getText().toString());
     }
+
+    public void sendMsm(String number){
+        Log.d(TAG, "sendSMSAnswer: " + tel);
+        Log.d(TAG, "sendSMSAnswer: " + number);
+        Log.d(TAG, "sendSMSAnswer: " + msm);
+        if (number.equals("+52"+tel)){
+            enviarSMS(number,msm);
+        }
+    }
+
 
 }

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="btn"
     tools:context=".MainActivity">
 
     <TextView
@@ -63,5 +62,15 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtPhone" />
+
+    <Button
+        android:id="@+id/btnConfi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fijar Numero"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSMS" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

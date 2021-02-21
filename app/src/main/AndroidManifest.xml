@@ -3,6 +3,9 @@
     package="net.ivanvega.mibroadcastreceiverytelefonia">
 
     <uses-permission android:name="android.permission.SEND_SMS"></uses-permission>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"></uses-permission>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_CALL_LOG"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -34,6 +37,11 @@
 
         </receiver>
 
+        <receiver android:name=".receivers.MiReceiverPhone">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 
